@@ -16,6 +16,7 @@ class Board extends React.Component {
         let winning = (this.props.winning_line) ? this.props.winning_line.includes(i) : false;
         return (
             <Square
+                key={i}
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)}
                 winning={winning}
@@ -24,23 +25,21 @@ class Board extends React.Component {
     }
 
     render() {
+        let board = Array(3).fill([]);
+        for (let i = 0; i < 3 ; i++) {
+            let row = [];
+            for (let j = 0; j < 3 ; j++) {
+                row[j] = this.renderSquare(i*3+j);
+            }
+            board[i] =
+                <div className="board-row" key={i} >
+                    {row}
+                </div>;
+        }
+
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {board}
             </div>
         );
     }
